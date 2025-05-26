@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stripe Fee Analyzer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <style>
+      :root {
+        --primary: #0e1117;
+        --secondary: #00bcd4;
+        --accent: #1de9b6;
+        --text: #e0e0e0;
+        --white: #ffffff;
+        --header-overlay: rgba(0, 0, 0, 0.6);
+      }
+
+      .light-theme {
+        --primary: #ffffff;
+        --secondary: #00bcd4;
+        --accent: #1de9b6;
+        --text: #111111;
+        --white: #ffffff;
+        --header-overlay: rgba(255, 255, 255, 0.5);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--primary);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+        transition: background 0.5s, color 0.5s;
+      }
+
+      nav {
+        background: #121821;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      nav a {
+        color: var(--text);
+        text-decoration: none;
+        margin: 0 1rem;
+        font-weight: 600;
+        transition: color 0.3s;
+      }
+
+      nav a:hover {
+        color: var(--accent);
+      }
+
+      header {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: url("https://images.unsplash.com/photo-1549921296-3a6b9f6c525d"),
+          url("https://images.stripeassets.com/fzn2n1nzq965/7ITBvIUjBudsnymEYtOddj/3f4e576e49ed82d6442ff9b8a3e07784/pricing-stripe-default-social-card.jpg?q=80");
+        background-blend-mode: overlay;
+        background-position: center, center;
+        background-size: cover, auto;
+        text-align: center;
+        padding: 2rem;
+        position: relative;
+      }
+
+      header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--header-overlay);
+        z-index: 1;
+      }
+
+      header div {
+        position: relative;
+        z-index: 2;
+      }
+
+      header h1 {
+        font-size: 3rem;
+        background: linear-gradient(to right, #00bcd4, #1de9b6);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      header p {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+      }
+
+      .section {
+        padding: 4rem 2rem;
+        text-align: center;
+      }
+
+      .section h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .section p {
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0.85;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .feature {
+        background: #1b222c;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, background 0.3s;
+      }
+
+      .feature:hover {
+        transform: translateY(-10px);
+        background: #222d3a;
+      }
+
+      .contact-form {
+        max-width: 500px;
+        margin: 2rem auto;
+        background: #1e2a38;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      }
+
+      .contact-form input,
+      .contact-form textarea {
+        width: 100%;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        background: #2e3a4a;
+        color: var(--text);
+      }
+
+      .contact-form button {
+        background: var(--secondary);
+        color: var(--white);
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      footer {
+        background: #101419;
+        text-align: center;
+        padding: 2rem;
+        color: #aaa;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 2rem;
+        }
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div><strong>SFA</strong></div>
+      <div>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <header id="home">
+      <div data-aos="fade-up">
+        <h1>Stripe Fee Analyzer</h1>
+        <p>
+          Analyze, understand, and optimize your Stripe transaction fees
+          instantly
+        </p>
+      </div>
+    </header>
+
+    <section class="section" id="about">
+      <h2 data-aos="fade-right">About Us</h2>
+      <p data-aos="fade-left">
+        We help freelancers, e-commerce store owners, and businesses using
+        Stripe understand and reduce transaction costs.
+      </p>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <h2 data-aos="fade-right">How It Works</h2>
+      <div class="features-grid">
+        <div class="feature" data-aos="fade-up">
+          <h3>1. Input Your Stripe Data</h3>
+          <p>
+            Enter your Stripe transaction data or upload a CSV export. We’ll
+            parse it instantly.
+          </p>
+        </div>
+        <div class="feature" data-aos="fade-up">
+          <h3>2. Analyze Fees</h3>
+          <p>
+            We break down each fee by type—processing, conversion, dispute—so
+            you know where your money goes.
+          </p>
+        </div>
+        <div class="feature" data-aos="fade-up">
+          <h3>3. Get Optimization Tips</h3>
+          <p>
+            Receive tailored insights on how to lower fees based on your
+            transaction history and behavior.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <h2 data-aos="zoom-in">Services</h2>
+      <div class="features-grid">
+        <div class="feature" data-aos="fade-up">
+          <lottie-player
+            src="https://assets9.lottiefiles.com/packages/lf20_myejiggj.json"
+            background="transparent"
+            speed="1"
+            style="width: 100px; height: 100px"
+            loop
+            autoplay
+          ></lottie-player>
+          <h3>Fee Analysis</h3>
+          <p>
+            Instantly analyze the Stripe fees you're paying per transaction.
+          </p>
+        </div>
+        <div class="feature" data-aos="fade-up">
+          <lottie-player
+            src="https://assets2.lottiefiles.com/packages/lf20_fcfjwiyb.json"
+            background="transparent"
+            speed="1"
+            style="width: 100px; height: 100px"
+            loop
+            autoplay
+          ></lottie-player>
+          <h3>Optimization Tips</h3>
+          <p>Get smart suggestions to reduce your payment processing fees.</p>
+        </div>
+        <div class="feature" data-aos="fade-up">
+          <lottie-player
+            src="https://assets2.lottiefiles.com/packages/lf20_3rwasyjy.json"
+            background="transparent"
+            speed="1"
+            style="width: 100px; height: 100px"
+            loop
+            autoplay
+          ></lottie-player>
+          <h3>Detailed Insights</h3>
+          <p>View detailed charts and breakdowns of your Stripe charges.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <h2 data-aos="zoom-in">Contact Us</h2>
+      <form
+        class="contact-form"
+        action="https://formsubmit.co/georgembria@gmail.com"
+        method="POST"
+      >
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <textarea
+          name="message"
+          rows="5"
+          placeholder="Your Message"
+          required
+        ></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+
+    <footer>&copy; 2025 Stripe Fee Analyzer. All rights reserved.</footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+
+      function toggleTheme() {
+        const root = document.documentElement;
+        root.classList.toggle("light-theme");
+      }
+    </script>
+  </body>
+</html>
